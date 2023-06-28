@@ -18,6 +18,8 @@ char **string_tokenize(char *lineptr, char **argv);
 char *_strdup(char *str);
 char *_memcpy(char *dest, char *src, size_t n);
 size_t _strlen(char *str);
+char *_strcat(char *dest, char *src);
 int _putchar(char c);
 int _printstr(char *str);
+void _free(char **argv);
 #endif

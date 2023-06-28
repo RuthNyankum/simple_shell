@@ -4,7 +4,7 @@
  * smaller strings
  * @lineptr: the string to be tokenized
  * @argv: command line argument which will store the tokens
- * Return - returns argv
+ * Return: returns argv
  */
 char **string_tokenize(char *lineptr, char **argv)
 {
@@ -33,8 +33,6 @@ char **string_tokenize(char *lineptr, char **argv)
 	token = strtok(lineptr_cp, delim);
 	for (i = 0; token != NULL; i++)
 	{
-		/*Memory alloc for the array that will hold each token*/
-		argv[i] = malloc(sizeof(char) * _strlen(token));
 		/*strcpy(argv[i], token);*/
 		argv[i] = _strdup(token);
 		token = strtok(NULL, delim);

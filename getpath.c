@@ -3,11 +3,11 @@
  * get_location - gets the location of the command file
  * @command: the command to be located
  *
- * Return - returns the command path if it exists
+ * Return: returns the command path if it exists
  */
 char *get_location(char *command)
 {
-	char *path, *path_cp = NULL, *path_token;
+	char *path, *path_cp = NULL, *path_token = NULL;
 	char *file_path = NULL;
 	size_t command_lenght;
 	int directory_lenght;
@@ -23,10 +23,10 @@ char *get_location(char *command)
 		{
 			directory_lenght = _strlen(path_token);
 			file_path = malloc(command_lenght + directory_lenght + 2);
-			file_path = _strdup(path_token);
-			strcat(file_path, "/");
-			strcat(file_path, command);
-			strcat(file_path, "\0");
+			_strcat(file_path, path_token);
+			_strcat(file_path, "/");
+			_strcat(file_path, command);
+			_strcat(file_path, "\0");
 			if (stat(file_path, &buffer) == 0)/*testing the path we created exists*/
 			{
 				free(path_cp);

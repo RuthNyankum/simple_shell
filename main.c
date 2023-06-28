@@ -3,52 +3,47 @@
 * main - this is the main function my main
 * @ac: arguments counts
 * @argv: command line arguments
-* Return - 0
+* Return: 0
 */
-int main(int ac, char **argv)
+int main(int ac __attribute__((unused)), char **argv)
 {
 	char *prompt = "$ ", *lineptr = NULL;
 	size_t n = 0;
-	ssize_t count_char;
 	pid_t mypid;
-	(void) ac;
 
 	while (2)
 	{
-		_printstr(prompt);
-		count_char = getline(&lineptr, &n, stdin);
-		if (count_char == -1)
+		if (isatty(STDIN_FILENO))
+			_printstr(prompt);
+		if (getline(&lineptr, &n, stdin) == -1)
 		{
-			_printstr("Exiting shell ...\n");
 			free(lineptr);
-			return (-1);
+			if (isatty(STDIN_FILENO))
+				write(1, "\n", 1);
+			exit(EXIT_FAILURE);
 		}
 		argv = string_tokenize(lineptr, argv);
 		if (argv)
 		{
 			mypid = fork();
 			if (mypid == -1)
-			{
 				perror("unable to fork");
-			}
 			else if (mypid == 0)
-			{
 				execmd(argv);
-			}
 			else
-			{
 				wait(NULL);
-			}
 		}
 		else
 		{
 			perror("argv mem alloc failed");
 			free(lineptr);
-			free(argv);
+			_free(argv);
+			argv = NULL;
 			return (-1);
 		}
 	}
 	free(lineptr);
-	free(argv);
+	_free(argv);
+	argv = NULL;
 	return (0);
 }
